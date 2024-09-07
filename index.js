@@ -6,38 +6,76 @@ import {
   addContact,
 } from "./contacts.js";
 
-const argv = require("yargs").argv;
-const contacts = require("./contacts");
+// const argv = require("yargs").argv;
+import yargs from "yargs";
 
-function invokeAction({ action, id, name, email, phone }) {
-  switch (action) {
-    case "list":
-      contacts2.listContacts().then(console.table);
-      break;
+import { hideBin } from "yargs/helpers";
 
-    case "get":
-      contacts2.getContactById(id).then(console.log);
-      break;
+const argv = yargs(hideBin(process.argv))
+  .option("action", {
+    alias: "a",
+    describe: "Action to perform",
+    type: "string",
+  })
+  .option("id", {
+    alias: "i",
+    describe: "ID of the contact",
+    type: "string",
+  })
+  .option("name", {
+    alias: "n",
+    describe: "Name of the contact",
+    type: "string",
+  })
+  .option("email", {
+    alias: "e",
+    describe: "Email of the contact",
+    type: "string",
+  })
+  .option("phone", {
+    alias: "p",
+    describe: "Phone of the contact",
+    type: "string",
+  })
+  .help()
+  .alias("help", "h").argv;
 
-    case "add":
-      contacts2
-        .addContact(name, email, phone)
-        .then(() => console.log("Contact added"));
-      break;
-
-    case "remove":
-      contacts2.removeContact(id).then(() => console.log("Contact removed"));
-      break;
-
-    default:
-      console.warn("\x1B[31m Unknown action type!");
-  }
-}
+// Your invokeAction function here
+const invokeAction = async ({ action, id, name, email, phone }) => {
+  // Your switch case or logic
+};
 
 invokeAction(argv);
+
+// function invokeAction({ action, id, name, email, phone }) {
+//   switch (action) {
+//     case "list":
+//       contacts2.listContacts().then(console.table);
+//       break;
+
+//     case "get":
+//       contacts2.getContactById(id).then(console.log);
+//       break;
+
+//     case "add":
+//       contacts2
+//         .addContact(name, email, phone)
+//         .then(() => console.log("Contact added"));
+//       break;
+
+//     case "remove":
+//       contacts2.removeContact(id).then(() => console.log("Contact removed"));
+//       break;
+
+//     default:
+//       console.warn("\x1B[31m Unknown action type!");
+//   }
+// }
+
+// invokeAction(argv);
 //using commander
 
-const { Command } = require("commander");
+import { Command } from "commander";
 const program = new Command();
 const contacts3 = require("./contacts");
 
